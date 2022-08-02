@@ -1,6 +1,14 @@
-import { Offer } from '../../types/types';
+import { City, Offer } from '../../types/types';
 import CitiesOfferCard from '../../components/cities-offer-card/cities-offer-card';
 import HeaderMain from '../../components/header-main/header-main';
+import Map from '../../components/map/map';
+
+const AMSTERDAM: City = {
+  title: 'Amsterdam',
+  lat: 52.377956,
+  lng: 4.897070,
+  zoom: 12,
+};
 
 type MainPageProps = {
   offers: Offer[],
@@ -73,7 +81,13 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  city={AMSTERDAM}
+                  offers={offers}
+                  selected={offers[0]}
+                />
+              </section>
             </div>
           </div>
         </div>
