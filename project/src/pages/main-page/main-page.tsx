@@ -2,6 +2,7 @@ import { City, Offer } from '../../types/types';
 import CitiesOfferCard from '../../components/cities-offer-card/cities-offer-card';
 import HeaderMain from '../../components/header-main/header-main';
 import Map from '../../components/map/map';
+import { useState } from 'react';
 
 const AMSTERDAM: City = {
   title: 'Amsterdam',
@@ -15,6 +16,12 @@ type MainPageProps = {
 }
 
 export default function MainPage({ offers }: MainPageProps): JSX.Element {
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  function onOfferHover(offer: Offer): void {
+    setSelectedOffer(offer);
+  }
+
   return (
     <div className="page page--gray page--main">
       <HeaderMain isLoggedIn />
@@ -77,7 +84,13 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer: Offer) => (<CitiesOfferCard key={offer.id} offer={offer} />))}
+                {offers.map((offer: Offer) => (
+                  <CitiesOfferCard
+                    key={offer.id}
+                    offer={offer}
+                    onOfferHover={onOfferHover}
+                  />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">
@@ -85,7 +98,7 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
                 <Map
                   city={AMSTERDAM}
                   offers={offers}
-                  selected={offers[0]}
+                  selected={selectedOffer}
                 />
               </section>
             </div>
