@@ -18,3 +18,12 @@ export type City = {
   lng: number;
   zoom: number;
 }
+
+export type Review = {
+  id: string;
+  author: string;
+  avatar: string;
+  rating: Rating;
+  text: string;
+  date: string;
+}
