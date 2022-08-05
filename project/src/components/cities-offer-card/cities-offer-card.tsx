@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { AppRoute } from '../../../src/const';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/types';
@@ -5,11 +6,17 @@ import OfferCard from '../offer-card/offer-card';
 
 type OfferCardProps = {
   offer: Offer,
+  onOfferHover: (offer: Offer) => void,
 }
 
-export default function CitiesOfferCard({ offer }: OfferCardProps): JSX.Element {
+export default function CitiesOfferCard({ offer, onOfferHover }: OfferCardProps): JSX.Element {
+  function offerHoverHandler(event: MouseEvent<HTMLElement>) {
+    event.preventDefault();
+    onOfferHover(offer);
+  }
+
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseEnter={offerHoverHandler}>
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
