@@ -1,9 +1,11 @@
 import { Offer } from '../../types/types';
 import HeaderMain from '../../components/header-main/header-main';
 import NearPlacesOfferCard from '../../components/near-places-offer-card/near-places-offer-card';
-import ReviewForm from '../../components/review-form/review-form';
+import ReviewsList from '../../components/reviews-list/reviews-list';
+import Map from '../../components/map/map';
+import { useState } from 'react';
+import { AMSTERDAM, MAX_NEAR_PLACES_VISIBLE } from '../../const';
 
-const MAX_NEAR_PLACES_VISIBLE = 3;
 
 type OfferPageProps = {
   offers: Offer[],
@@ -11,6 +13,12 @@ type OfferPageProps = {
 }
 
 export default function OfferPage({ offers, isLoggedIn }: OfferPageProps): JSX.Element {
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  function onOfferHover(offer: Offer): void {
+    setSelectedOffer(offer);
+  }
+
   return (
     <div className="page">
       <HeaderMain isLoggedIn={isLoggedIn} />
@@ -134,44 +142,30 @@ export default function OfferPage({ offers, isLoggedIn }: OfferPageProps): JSX.E
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ 'width': '80%' }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
-                <ReviewForm />
-              </section>
+              <ReviewsList />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              city={AMSTERDAM}
+              offers={offers.slice(0, MAX_NEAR_PLACES_VISIBLE)}
+              selected={selectedOffer}
+            />
+          </section>
         </section>
 
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {offers.slice(0, MAX_NEAR_PLACES_VISIBLE).map((offer: Offer) => (<NearPlacesOfferCard key={offer.id} offer={offer} />))}
+              {offers.slice(0, MAX_NEAR_PLACES_VISIBLE)
+                .map((offer: Offer) => (
+                  <NearPlacesOfferCard
+                    key={offer.id}
+                    offer={offer}
+                    onOfferHover={onOfferHover}
+                  />
+                ))}
             </div>
           </section>
         </div>

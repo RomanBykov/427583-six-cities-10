@@ -1,15 +1,6 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, RatingWidth } from '../../const';
 import { Offer } from '../../types/types';
-
-const RatingWidth = {
-  0: 0,
-  1: 20,
-  2: 40,
-  3: 60,
-  4: 80,
-  5: 100
-};
 
 type OfferCardProps = {
   offer: Offer,

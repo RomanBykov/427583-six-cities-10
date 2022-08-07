@@ -1,15 +1,9 @@
-import { City, Offer } from '../../types/types';
+import { Offer } from '../../types/types';
 import CitiesOfferCard from '../../components/cities-offer-card/cities-offer-card';
 import HeaderMain from '../../components/header-main/header-main';
 import Map from '../../components/map/map';
 import { useState } from 'react';
-
-const AMSTERDAM: City = {
-  title: 'Amsterdam',
-  lat: 52.377956,
-  lng: 4.897070,
-  zoom: 12,
-};
+import { AMSTERDAM } from '../../const';
 
 type MainPageProps = {
   offers: Offer[],
